@@ -31,9 +31,9 @@ while True:
         crypt = response.json()['RAW'][currency]['USD']
         df = df.append(crypt, ignore_index=True)
         time.sleep(10)
-        print df.size
+        print "number of observations in current df: {0}".format(df.size)
 
     if df.size > 10000:
         print "new csv file outputted"
-        df.write_csv("./data/cryptcoin_{0}.csv".format(datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")))
+        df.to_csv("./data/cryptcoin_{0}.csv".format(datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")))
         df = {}
