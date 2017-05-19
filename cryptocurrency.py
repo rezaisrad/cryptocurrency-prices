@@ -35,5 +35,5 @@ while True:
 
     if df.size > 10000:
         print "new csv file outputted"
-        df.to_csv("./data/cryptcoin_{0}.csv".format(datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")))
+        df.to_csv("cryptcoin_{0}.csv".format(datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")))
         df = {}
