@@ -27,10 +27,6 @@
 *.sqlite3
 *.db
 
-# Folders #
-######################
-
-
 # OS generated files #
 ######################
 .DS_Store
