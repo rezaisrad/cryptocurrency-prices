@@ -5,12 +5,6 @@ import time
 import datetime as datetime
 
 
-df = pd.DataFrame({}, columns = ['LASTUPDATE', 'HIGH24HOUR',  'LASTVOLUMETO',
-                                                            'MKTCAP', 'LASTVOLUME', 'PRICE', 'SUPPLY', 'CHANGEPCT24HOUR',
-                                                            'LOW24HOUR', 'OPEN24HOUR', 'VOLUME24HOURTO', 'FLAGS',
-                                                            'VOLUME24HOUR', 'CHANGE24HOUR', 'TYPE', 'LASTTRADEID',
-                                                            'FROMSYMBOL', 'LASTMARKET', 'MARKET', 'TOSYMBOL'])
-
 # maximum size of API query for currency prices is 23
 currency_top = ["BTC", "ETH", "XRP", "XEM", "LTC", "XLM", "ETC", "BCN", "DASH",
                             "DGB", "XMR", "SC", "DOGE", "BTS", "GNT", "ARDR", "EMC2", "ZEC",
@@ -26,6 +20,12 @@ while True:
 
     response = requests.get('https://min-api.cryptocompare.com/data/pricemultifull', params=parameters)
     crypt_dict = [response.json()['RAW'][currency]['USD'] for currency in currency_top]
+    
+    df = pd.DataFrame({}, columns = ['LASTUPDATE', 'HIGH24HOUR',  'LASTVOLUMETO',
+                                                            'MKTCAP', 'LASTVOLUME', 'PRICE', 'SUPPLY', 'CHANGEPCT24HOUR',
+                                                            'LOW24HOUR', 'OPEN24HOUR', 'VOLUME24HOURTO', 'FLAGS',
+                                                            'VOLUME24HOUR', 'CHANGE24HOUR', 'TYPE', 'LASTTRADEID',
+                                                            'FROMSYMBOL', 'LASTMARKET', 'MARKET', 'TOSYMBOL'])
 
     for currency in currency_top:
         crypt = response.json()['RAW'][currency]['USD']
@@ -36,4 +36,3 @@ while True:
     if df.size > 10000:
         print "new csv file outputted"
         df.to_csv("cryptcoin_{0}.csv".format(datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")))
-        df = {}
