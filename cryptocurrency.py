@@ -22,10 +22,10 @@ while True:
     crypt_dict = [response.json()['RAW'][currency]['USD'] for currency in currency_top]
     
     df = pd.DataFrame({}, columns = ['LASTUPDATE', 'HIGH24HOUR',  'LASTVOLUMETO',
-                                                            'MKTCAP', 'LASTVOLUME', 'PRICE', 'SUPPLY', 'CHANGEPCT24HOUR',
-                                                            'LOW24HOUR', 'OPEN24HOUR', 'VOLUME24HOURTO', 'FLAGS',
-                                                            'VOLUME24HOUR', 'CHANGE24HOUR', 'TYPE', 'LASTTRADEID',
-                                                            'FROMSYMBOL', 'LASTMARKET', 'MARKET', 'TOSYMBOL'])
+                                    'MKTCAP', 'LASTVOLUME', 'PRICE', 'SUPPLY', 'CHANGEPCT24HOUR',
+                                    'LOW24HOUR', 'OPEN24HOUR', 'VOLUME24HOURTO', 'FLAGS',
+                                    'VOLUME24HOUR', 'CHANGE24HOUR', 'TYPE', 'LASTTRADEID',
+                                    'FROMSYMBOL', 'LASTMARKET', 'MARKET', 'TOSYMBOL'])
 
     for currency in currency_top:
         crypt = response.json()['RAW'][currency]['USD']
