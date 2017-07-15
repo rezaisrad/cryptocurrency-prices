@@ -21,16 +21,19 @@ parameters  = {'fsyms': currency_str, 'tsyms': 'USD'}
 
 
 while True:
-    response = requests.get('https://min-api.cryptocompare.com/data/pricemultifull', params=parameters)
+    try:
+        response = requests.get('https://min-api.cryptocompare.com/data/pricemultifull', params=parameters)
+        for currency in currency_top:
+            crypt = response.json()['RAW'][currency]['USD']
+            df = df.append(crypt, ignore_index=True)
+        print df.loc[:, ['FROMSYMBOL', 'TOSYMBOL', 'PRICE', 'MARKET', 'CHANGEPCT24HOUR']].tail(23)
+        print "number of observations in current df: {0}".format(len(df))
+        time.sleep(10)
 
-    for currency in currency_top:
-        crypt = response.json()['RAW'][currency]['USD']
-        df = df.append(crypt, ignore_index=True)
-    print df.loc[:, ['FROMSYMBOL', 'TOSYMBOL', 'PRICE', 'MARKET', 'CHANGEPCT24HOUR']].tail(23)
-    print "number of observations in current df: {0}".format(len(df))
-    time.sleep(10)
-
-    if len(df) > 10000:
-        print "new csv file outputted"
-        df.to_csv("cryptcoin_{0}.csv".format(datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")))
-        df = pd.DataFrame({}, columns=columns)
+        if len(df) > 10000:
+            print "new csv file outputted"
+            df.to_csv("cryptcoin_{0}.csv".format(datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")))
+            df = pd.DataFrame({}, columns=columns)
+    except:
+        time.sleep(15)
+        continue
